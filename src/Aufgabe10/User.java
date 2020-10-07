@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class User implements Runnable{
 
-    private FiFoQueue fiFoQueue;
+    public FiFoQueue Queue;
 
     public static void main(String[] args) throws InterruptedException {
         ArrayList<Thread> threads = new ArrayList<>();
@@ -34,15 +34,15 @@ public class User implements Runnable{
     }
 
     public User(FiFoQueue fiFoQueue) {
-        this.fiFoQueue = fiFoQueue;
+        Queue = fiFoQueue;
     }
 
     @Override
     public void run() {
-        fiFoQueue.put(Thread.currentThread().getName());
-        fiFoQueue.put(Thread.currentThread().getName());
-        fiFoQueue.put(Thread.currentThread().getName());
-        fiFoQueue.put(Thread.currentThread().getName());
-        System.out.println(fiFoQueue.get());
+        Queue.put(Thread.currentThread().getName());
+        Queue.put(Thread.currentThread().getName());
+        Queue.put(Thread.currentThread().getName());
+        Queue.put(Thread.currentThread().getName());
+        System.out.println(Queue.get());
     }
 }
