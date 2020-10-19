@@ -1,16 +1,16 @@
-package Aufgabe11;
+package Aufgabe11.eigeneLösungen;
 
 import java.util.ArrayList;
 import java.util.concurrent.Semaphore;
 
-public class Philosoph implements Runnable{
+public class Mischlösung implements Runnable{
 
     int nr;
-    ArrayList<Philosoph> philosophs;
+    ArrayList<Mischlösung> philosophs;
     Semaphore philosophSemaphore;
     Semaphore werDarfAufDenTischSchauen;
 
-    public Philosoph(int nr ,ArrayList<Philosoph> philosophs, Semaphore mutex) {
+    public Mischlösung(int nr , ArrayList<Mischlösung> philosophs, Semaphore mutex) {
         this.nr = nr;
         this.philosophs = philosophs;
         philosophSemaphore = new Semaphore(1, true);
@@ -38,20 +38,19 @@ public class Philosoph implements Runnable{
 
     public void eat() {
         try {
-            System.out.printf("Philosoph %d möchte gerne auf den Tisch schauen.%n", nr);
+            System.out.printf("Essenverwaltung %d möchte gerne auf den Tisch schauen.%n", nr);
             werDarfAufDenTischSchauen.acquire();
-            System.out.printf("Philosoph %d darf auf den Tisch schauen.%n", nr);
-
-            System.out.printf("Philosoph %d möchte gerne Gabel %d.%n", nr,nr);
+            System.out.printf("Essenverwaltung %d darf auf den Tisch schauen.%n", nr);
+            System.out.printf("Essenverwaltung %d möchte gerne Gabel %d.%n", nr,nr);
             philosophSemaphore.acquire();
-            System.out.printf("Philosoph %d hat Gabel %d.%n", nr,nr);
-            System.out.printf("Philosoph %d möchte gerne Gabel %d.%n", nr, (nr+1)%philosophs.size());
+            System.out.printf("Essenverwaltung %d hat Gabel %d.%n", nr,nr);
+            System.out.printf("Essenverwaltung %d möchte gerne Gabel %d.%n", nr, (nr+1)%philosophs.size());
             philosophs.get((nr+1)%philosophs.size()).neighbourWantsToEat();
-            System.out.printf("Philosoph %d hat Gabel %d.%n", nr, (nr+1)%philosophs.size());
+            System.out.printf("Essenverwaltung %d hat Gabel %d.%n", nr, (nr+1)%philosophs.size());
             werDarfAufDenTischSchauen.release();
-            System.out.printf("Philosoph %d gibt die Sicht frei und beginnt mit dem essen.%n", nr);
+            System.out.printf("Essenverwaltung %d gibt die Sicht frei und beginnt mit dem essen.%n", nr);
             Thread.sleep(((int) (Math.random() * 100)));
-            System.out.printf("Philosoph %d ist mit dem essen fertig und legt sein Besteck zurück.%n", nr);
+            System.out.printf("Essenverwaltung %d ist mit dem essen fertig und legt sein Besteck zurück.%n", nr);
             philosophSemaphore.release();
             philosophs.get((nr+1)%philosophs.size()).neighbourDoneToEat();
 
@@ -72,15 +71,15 @@ public class Philosoph implements Runnable{
 
 
     public static void main(String[] args) {
-        ForkManagement forkManagement = new ForkManagement(5);
-        ArrayList<Philosoph> philosophs = new ArrayList<>();
+
+        ArrayList<Mischlösung> philosophs = new ArrayList<>();
         Semaphore mutex = new Semaphore(2, true);
-        Philosoph p0 = new Philosoph(0, philosophs,mutex);
-        Philosoph p1 = new Philosoph(1, philosophs,mutex);
-        Philosoph p2 = new Philosoph(2, philosophs,mutex);
+        Mischlösung p0 = new Mischlösung(0, philosophs,mutex);
+        Mischlösung p1 = new Mischlösung(1, philosophs,mutex);
+        Mischlösung p2 = new Mischlösung(2, philosophs,mutex);
 /*
-        Philosoph p3 = new Philosoph(3, philosophs,mutex);
-        Philosoph p4 = new Philosoph(4, philosophs,mutex);
+        Essenverwaltung p3 = new Essenverwaltung(3, philosophs,mutex);
+        Essenverwaltung p4 = new Essenverwaltung(4, philosophs,mutex);
 */
 
         philosophs.add(p0);
@@ -90,7 +89,7 @@ public class Philosoph implements Runnable{
         philosophs.add(p4);*/
 
         ArrayList<Thread> threads = new ArrayList<>();
-        for ( Philosoph p : philosophs ) {
+        for ( Mischlösung p : philosophs ) {
             threads.add(new Thread(p));
         }
         for ( Thread t : threads ) {
