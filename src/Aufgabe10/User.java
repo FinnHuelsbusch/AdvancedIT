@@ -2,9 +2,13 @@ package Aufgabe10;
 
 import java.util.ArrayList;
 
-public class User implements Runnable{
+public class User implements Runnable {
 
     public FiFoQueue Queue;
+
+    public User(FiFoQueue fiFoQueue) {
+        Queue = fiFoQueue;
+    }
 
     public static void main(String[] args) throws InterruptedException {
         ArrayList<Thread> threads = new ArrayList<>();
@@ -31,10 +35,6 @@ public class User implements Runnable{
         for ( String s : list ) {
             System.out.println(s);
         }
-    }
-
-    public User(FiFoQueue fiFoQueue) {
-        Queue = fiFoQueue;
     }
 
     @Override

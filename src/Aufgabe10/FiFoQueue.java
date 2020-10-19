@@ -4,11 +4,10 @@ import java.util.concurrent.Semaphore;
 
 public class FiFoQueue {
 
-    Element firstElement;
     static Semaphore mutex = new Semaphore(1, true);
+    Element firstElement;
 
-
-    public void put(String stringToInsert)  {
+    public void put(String stringToInsert) {
         try {
             mutex.acquire();
             if (firstElement == null) {
@@ -18,7 +17,7 @@ public class FiFoQueue {
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             mutex.release();
         }
 
@@ -48,7 +47,8 @@ public class FiFoQueue {
                 mutex.release();
                 firstElement = firstElement.getNextElement();
                 return currentElement.getValue();
-            } else {mutex.release();
+            } else {
+                mutex.release();
                 return null;
             }
         } catch (InterruptedException e) {

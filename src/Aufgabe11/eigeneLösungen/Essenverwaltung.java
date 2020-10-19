@@ -3,16 +3,9 @@ package Aufgabe11.eigeneLösungen;
 import java.util.concurrent.Semaphore;
 
 public class Essenverwaltung implements Runnable {
-    enum Status {
-        think,
-        eat,
-        hungry
-    }
-
-    private Status[] status;
-    private Semaphore[] privateSemaphores;
-    private Semaphore mutex;
-
+    private final Status[] status;
+    private final Semaphore[] privateSemaphores;
+    private final Semaphore mutex;
     public Essenverwaltung(int size) {
         status = new Status[size];
         privateSemaphores = new Semaphore[size];
@@ -23,20 +16,24 @@ public class Essenverwaltung implements Runnable {
         mutex = new Semaphore(1, true);
     }
 
-    public void eat(int nr ) {
+    public static void main(String[] args) {
+        new Essenverwaltung(5);
+    }
+
+    public void eat(int nr) {
         try {
             mutex.acquire();
             status[nr] = Status.hungry;
             mutex.release();
-            System.out.printf("Philosoph %d ist hungrig.%n" , nr);
+            System.out.printf("Philosoph %d ist hungrig.%n", nr);
             test(nr);
             privateSemaphores[nr].acquire();
-            System.out.printf("Philosoph %d isst gerade.%n" , nr);
+            System.out.printf("Philosoph %d isst gerade.%n", nr);
             Thread.sleep(((int) (Math.random() * 100)));
-            System.out.printf("Philosoph %d denkt gerade.%n" , nr);
+            System.out.printf("Philosoph %d denkt gerade.%n", nr);
             status[nr] = Status.think;
             test((nr + 1) % privateSemaphores.length);
-            test((nr + privateSemaphores.length-1) % privateSemaphores.length);
+            test((nr + privateSemaphores.length - 1) % privateSemaphores.length);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -46,10 +43,7 @@ public class Essenverwaltung implements Runnable {
     public void test(int nr) {
         try {
             mutex.acquire();
-            if (status[(nr + 1) % privateSemaphores.length] != Status.eat &&
-                status[(nr +privateSemaphores.length-1) % privateSemaphores.length] != Status.eat &&
-                status[nr] == Status.hungry)
-            {
+            if (status[(nr + 1) % privateSemaphores.length] != Status.eat && status[(nr + privateSemaphores.length - 1) % privateSemaphores.length] != Status.eat && status[nr] == Status.hungry) {
                 status[nr] = Status.eat;
                 privateSemaphores[nr].release();
             }
@@ -69,7 +63,7 @@ public class Essenverwaltung implements Runnable {
     }
 
 
-    public static void main(String[] args) {
-        new Essenverwaltung(5);
+    enum Status {
+        think, eat, hungry
     }
 }

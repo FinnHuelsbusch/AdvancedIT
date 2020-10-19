@@ -22,7 +22,7 @@ public class AbschnittsVerwaltung {
 
         privateSemaphore = new Semaphore[size];
         waiting = new boolean[size];
-        Arrays.fill(waiting,false);
+        Arrays.fill(waiting, false);
         for ( int i = 0; i < size; i++ ) {
             privateSemaphore[i] = new Semaphore(0, true);
         }
@@ -41,7 +41,7 @@ public class AbschnittsVerwaltung {
                 // Der Abschnitt wird belegt
                 abschnittFrei = false;
                 System.out.printf("Lok 0 darf durchfahren.%n");
-            }else{
+            } else {
                 // Wunsch auf Einfahrt vermerken
                 waiting[0] = true;
                 System.out.printf("Lok 0 muss warten.%n");
@@ -95,7 +95,7 @@ public class AbschnittsVerwaltung {
                 // Abschnitt sperren
                 abschnittFrei = false;
                 System.out.printf("Lok 1 darf durchfahren.%n");
-            } else{
+            } else {
                 // Wunsch auf Einfahrt vermerken
                 waiting[1] = true;
                 System.out.printf("Lok 1 muss warten.%n");

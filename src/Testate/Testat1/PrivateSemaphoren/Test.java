@@ -7,12 +7,6 @@ public class Test {
     Runnable lok0, lok1;
     AbschnittsVerwaltung abschnittsVerwaltung;
 
-    public static void main(String[] args) {
-        new Test();
-    }
-
-
-
     public Test() {
         abschnittsVerwaltung = new AbschnittsVerwaltung(2);
 
@@ -30,7 +24,7 @@ public class Test {
         lok1 = new Lok1(abschnittsVerwaltung, 2500, 2500);
 
         //Lok0 ist in jedem Abschnitt schneller als Lok 1
-        lok0 = new Lok0(abschnittsVerwaltung, 2000,2000);
+        lok0 = new Lok0(abschnittsVerwaltung, 2000, 2000);
         lok1 = new Lok1(abschnittsVerwaltung, 2500, 2500);
 
         //Lok 0 ist wesentlich langsamer als Lok 1
@@ -52,6 +46,9 @@ public class Test {
         }
 
 
+    }
 
+    public static void main(String[] args) {
+        new Test();
     }
 }

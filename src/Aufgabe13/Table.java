@@ -26,7 +26,7 @@ public class Table {
         forks[(philNr + 1) % forks.length] = false;
     }
 
-    public synchronized  void releaseForks(int philNr) {
+    public synchronized void releaseForks(int philNr) {
         System.out.printf("Philosoph %d gibt seine Gabeln zurück.%n", philNr);
         forks[philNr] = true;
         forks[(philNr + 1) % forks.length] = true;

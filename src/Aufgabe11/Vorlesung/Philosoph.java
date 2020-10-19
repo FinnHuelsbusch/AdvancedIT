@@ -5,13 +5,17 @@ import java.util.ArrayList;
 public class Philosoph implements Runnable {
 
     static Forkmanagement forkmanagement;
-    private int nr;
+    private final int nr;
+
+    public Philosoph(int nr) {
+        this.nr = nr;
+    }
 
     public static void main(String[] args) {
-       forkmanagement =  new Forkmanagement(5);
+        forkmanagement = new Forkmanagement(5);
         ArrayList<Philosoph> philosophs = new ArrayList<>();
         ArrayList<Thread> threads = new ArrayList<>();
-        for ( int i = 0; i <5; i++ ) {
+        for ( int i = 0; i < 5; i++ ) {
             philosophs.add(new Philosoph(i));
             threads.add(new Thread(philosophs.get(philosophs.size() - 1)));
         }
@@ -25,10 +29,6 @@ public class Philosoph implements Runnable {
                 e.printStackTrace();
             }
         }
-    }
-
-    public Philosoph(int nr) {
-        this.nr = nr;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class Philosoph implements Runnable {
             Thread.sleep(((int) (Math.random() * 100)));
         } catch (Exception e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             forkmanagement.returnForks(nr);
         }
     }

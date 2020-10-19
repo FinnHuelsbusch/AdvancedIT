@@ -7,7 +7,6 @@ public class Forkmanagement {
     Semaphore mutex;
 
 
-
     public Forkmanagement(int size) {
         forkmanagement = new Semaphore[size];
         mutex = new Semaphore(1, true);
@@ -24,15 +23,15 @@ public class Forkmanagement {
     }
 
     public void getForksTwoPhaseLocking(int nr) throws Exception {
-        if (nr > forkmanagement.length-1) {
+        if (nr > forkmanagement.length - 1) {
             throw new Exception();
         }
         System.out.printf("Essenverwaltung %d möchte gerne auf den Tisch schauen.%n", nr);
         mutex.acquire();
         System.out.printf("Essenverwaltung %d darf auf den Tisch schauen.%n", nr);
-        System.out.printf("Essenverwaltung %d möchte gerne Gabel %d.%n", nr,nr);
+        System.out.printf("Essenverwaltung %d möchte gerne Gabel %d.%n", nr, nr);
         forkmanagement[nr].acquire();
-        System.out.printf("Essenverwaltung %d hat Gabel %d.%n", nr,nr);
+        System.out.printf("Essenverwaltung %d hat Gabel %d.%n", nr, nr);
         System.out.printf("Essenverwaltung %d möchte gerne Gabel %d.%n", nr, (nr + 1) % forkmanagement.length);
         forkmanagement[(nr + 1) % forkmanagement.length].acquire();
         System.out.printf("Essenverwaltung %d hat Gabel %d.%n", nr, (nr + 1) % forkmanagement.length);
@@ -41,20 +40,19 @@ public class Forkmanagement {
     }
 
     public void getForksResourceOrdering(int nr) throws Exception {
-        if (nr > forkmanagement.length-1) {
+        if (nr > forkmanagement.length - 1) {
             throw new Exception();
         }
         if (nr == forkmanagement.length - 1) {
-            System.out.printf("Essenverwaltung %d möchte gerne Gabel %d und Gabel %d.%n", nr,nr,(nr + 1) % forkmanagement.length);
+            System.out.printf("Essenverwaltung %d möchte gerne Gabel %d und Gabel %d.%n", nr, nr, (nr + 1) % forkmanagement.length);
             forkmanagement[(nr + 1) % forkmanagement.length].acquire();
             forkmanagement[nr].acquire();
-            System.out.printf("Essenverwaltung %d hat Gabel %d und Gabel %d.%n", nr,nr,(nr + 1) % forkmanagement.length);
-        }
-        else {
-            System.out.printf("Essenverwaltung %d möchte gerne Gabel %d und Gabel %d.%n", nr,nr,(nr + 1) % forkmanagement.length);
+            System.out.printf("Essenverwaltung %d hat Gabel %d und Gabel %d.%n", nr, nr, (nr + 1) % forkmanagement.length);
+        } else {
+            System.out.printf("Essenverwaltung %d möchte gerne Gabel %d und Gabel %d.%n", nr, nr, (nr + 1) % forkmanagement.length);
             forkmanagement[nr].acquire();
             forkmanagement[(nr + 1) % forkmanagement.length].acquire();
-            System.out.printf("Essenverwaltung %d hat Gabel %d und Gabel %d.%n", nr,nr,(nr + 1) % forkmanagement.length);
+            System.out.printf("Essenverwaltung %d hat Gabel %d und Gabel %d.%n", nr, nr, (nr + 1) % forkmanagement.length);
         }
     }
 }

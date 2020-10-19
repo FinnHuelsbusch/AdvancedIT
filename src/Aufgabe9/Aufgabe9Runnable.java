@@ -3,22 +3,23 @@ package Aufgabe9;
 import java.math.BigInteger;
 
 public class Aufgabe9Runnable implements Runnable {
-    private int[] array;
-    private int startIndex, endIndex;
+    private final int[] array;
+    private final int startIndex;
+    private final int endIndex;
     private BigInteger bigInteger;
-
-    @Override
-    public void run() {
-        bigInteger = BigInteger.ONE;
-        for ( int i = startIndex; i < endIndex; i++) {
-            bigInteger = bigInteger.multiply(BigInteger.valueOf(array[i]));
-        }
-    }
 
     public Aufgabe9Runnable(int[] array, int startIndex, int endIndex) {
         this.array = array;
         this.startIndex = startIndex;
         this.endIndex = endIndex;
+    }
+
+    @Override
+    public void run() {
+        bigInteger = BigInteger.ONE;
+        for ( int i = startIndex; i < endIndex; i++ ) {
+            bigInteger = bigInteger.multiply(BigInteger.valueOf(array[i]));
+        }
     }
 
     public BigInteger getBigInteger() {

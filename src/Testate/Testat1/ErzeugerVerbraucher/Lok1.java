@@ -1,9 +1,9 @@
 package Testate.Testat1.ErzeugerVerbraucher;
 
-public class Lok1 implements Lok{
+public class Lok1 implements Lok {
 
-    private AbschnittsVerwaltung abschnittsVerwaltung;
-    int zeitInMillisekundenImAbschnitt,zeitInMillisekundenAußerhalb;
+    int zeitInMillisekundenImAbschnitt, zeitInMillisekundenAußerhalb;
+    private final AbschnittsVerwaltung abschnittsVerwaltung;
 
 
     // Füllen der Variablen
@@ -37,11 +37,11 @@ public class Lok1 implements Lok{
         while (true) {
             try {
                 //fahren außerhalb des gemeinsamen Abschnitts
-                Thread.sleep((int)Math.random()*10000);
+                Thread.sleep((int) Math.random() * 10000);
                 //Einfahrt in den gemeinsamen Abschnitt beantragen und auf Freigabe warten
                 abschnittsVerwaltung.enterLok1();
                 //Durch den gemeinsamen Abschnitt fahren
-                Thread.sleep((int)Math.random()*10000);
+                Thread.sleep((int) Math.random() * 10000);
                 //Aus dem gemeinsamen Abschnitt ausfahren
                 abschnittsVerwaltung.exitLok1();
             } catch (Exception e) {
