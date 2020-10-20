@@ -1,5 +1,6 @@
-package Aufgabe13;
+package Aufgabe14;
 
+import javax.xml.crypto.Data;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -19,9 +20,12 @@ public class Client {
              socket = new DatagramSocket();
             BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
             while (true) {
-                System.out.println("Bitte tätigen sie eine Eingabe: ");
-                byte[] input = in.readLine().getBytes();
-                socket.send(new DatagramPacket(input,input.length, InetAddress.getLocalHost(), 4999));
+
+                String input = in.readLine();
+                socket.send(new DatagramPacket(input.getBytes(),input.getBytes().length, InetAddress.getLocalHost(), 5999));
+                DatagramPacket receive = new DatagramPacket(new byte[65507], 65507);
+                socket.receive(receive);
+                System.out.println(new String(receive.getData(),0,receive.getLength()));
             }
         } catch (SocketException e) {
             e.printStackTrace();

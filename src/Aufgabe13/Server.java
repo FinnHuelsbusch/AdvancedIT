@@ -27,9 +27,9 @@ public class Server {
 
             while (true) {
                 datagramSocket.receive(data);
-                String input = new String(data.getData());
+                String input = new String(data.getData(),0,data.getLength());
                 InetAddress inetAddress = data.getAddress();
-                System.out.println(inetAddress + " " + input);
+                System.out.println(inetAddress + ":"+ data.getPort()+" "+ input);
             }
         } catch (SocketException e) {
             e.printStackTrace();
