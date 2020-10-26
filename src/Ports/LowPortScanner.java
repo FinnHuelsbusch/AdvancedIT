@@ -20,7 +20,7 @@ public class LowPortScanner {
                 System.err.println(e);
                 break;
             } catch (IOException e) {
-
+                e.printStackTrace();
             }
         }
     }
