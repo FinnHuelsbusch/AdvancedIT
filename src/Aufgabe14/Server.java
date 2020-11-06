@@ -40,7 +40,7 @@ public class Server {
                     input = input.substring(6);
                     String fileName = input.split(",",3)[0];
                     int lineNo = Integer.parseInt(input.split(",",3)[1]);
-                    String data= input.split(",",2)[2];
+                    String data= input.split(",",3)[2];
                     CustomFile customFile = new CustomFile();
                     customFile.addLine(fileName, lineNo,data);
                     socket.send(new DatagramPacket("OK".getBytes(), 2,datagramPacket.getAddress(),datagramPacket.getPort()));

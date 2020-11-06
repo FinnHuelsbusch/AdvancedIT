@@ -1,4 +1,4 @@
-package Aufgabe14;
+package Aufgabe15;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -37,36 +37,12 @@ public class CustomFile {
 
     public void addLine(String fileName,int lineNo, String data) {
         File file = new File("src/Aufgabe14/Files", fileName);
-        List<String> fileContent = null;
         try {
-            fileContent = new ArrayList<>(Files.readAllLines(file.toPath()));
-            fileContent.set(lineNo - 1, data);
-            wirteToFile(file, fileContent);
-        } catch (IndexOutOfBoundsException e) {
-            if (fileContent != null) {
-                while (fileContent.size() < lineNo-1) {
-                    fileContent.add("");
-                }
-                fileContent.add(data);
-                try {
-                    wirteToFile(file, fileContent);
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-            }
+            List<String> fileContent = new ArrayList<>(Files.readAllLines(file.toPath()));
+            fileContent.set(lineNo-1, data);
+            Files.write(file.toPath(), fileContent, StandardCharsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void wirteToFile(File file, List<String> content) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
-        for ( int i = 0; i < content.size()-1; i++) {
-            writer.write(content.get(i));
-            writer.newLine();
-        }
-        writer.write(content.get(content.size()-1));
-        writer.flush();
-        writer.close();
     }
 }
